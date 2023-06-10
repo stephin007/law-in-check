@@ -1,6 +1,10 @@
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
-import { AppBar, Box, Toolbar, Typography, InputBase } from "@mui/material";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 
 const Search = styled("div")(({ theme }) => ({
@@ -45,7 +49,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const Navbar = () => {
+export default function SearchAppBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='static'>
@@ -56,7 +60,7 @@ const Navbar = () => {
             component='div'
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
-            KnowYourLaws
+            Know your Rights
           </Typography>
           <Search>
             <SearchIconWrapper>
@@ -71,6 +75,4 @@ const Navbar = () => {
       </AppBar>
     </Box>
   );
-};
-
-export default Navbar;
+}
