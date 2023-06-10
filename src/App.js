@@ -1,15 +1,15 @@
-import { ThemeProvider } from "@emotion/react";
-
-import { Navbar } from "./components";
-import theme from "./theme";
-
+// eslint-disable-next-line
+import { Navbar, Home } from "./components";
 import "./App.css";
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <Navbar />
-    </ThemeProvider>
+    <>
+      <div className='main-container'>
+        <Navbar />
+        <Home />
+      </div>
+    </>
   );
 };
 

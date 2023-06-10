@@ -1,0 +1,53 @@
+.home-container{
+    display: flex;
+    width: auto;
+}
+
+.home-section-1{
+    width: 50%;
+    height: 100vh;
+    background-color: #c0eeff;
+    color: #01579b;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-section-2{
+    width: 50%;
+    height: 50vh;
+    background-color: #014e6a;
+    border-radius: 10px;
+    color: #014e6a;
+    display: flex;
+}
+
+/* For large devices */
+@media screen and (max-width: 992px) {
+    .home-container {
+      flex-direction: column;
+    }
+
+    .home-section-1{
+        width: 100%;
+    }
+    
+    .home-section-2{
+        width: 100%;
+    }
+  }
+  
+  /* For medium devices */
+  /* @media screen and (max-width: 576px) {
+    .home-container {
+      width: 570px;
+    }
+  } */
+  
+  /* For small devices */
+  /* @media screen and (max-width: 350px) {
+    .home-container {
+      width: 320px;
+    }
+  } */

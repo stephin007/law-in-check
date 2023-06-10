@@ -1,4 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');    
+
 body {
   padding: 0;
   margin: 0;
+  background-color: #c0eeff;
+  font-family: 'Mulish', sans-serif !important;
+}
+
+.main-container {
+  width: 1280px;
+  height: 100vh;
+  margin: 0px auto 0 auto;
+  padding: 15px 15px 15px 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* For large devices */
+@media screen and (max-width: 1024px) {
+  .main-container {
+    width: 880px;
+    height: auto;
+  }
+}
+
+/* For medium devices */
+@media screen and (max-width: 992px) {
+  .main-container {
+    width: 570px;
+  }
+}
+
+/* For small devices */
+@media screen and (max-width: 540px) {
+  .main-container {
+    width: 320px;
+  }
 }
