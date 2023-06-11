@@ -1,16 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');    
 
+:root { 
+  --bg-dark: #F6F6F6; 
+  --bg-light: #FFFFFF;
+  --blue-dark-1: #00296b;
+  --blue-dark-2: #003f88;
+  --blue-dark-3: #00509d;
+  --yellow-dark-1: #fdc500;
+  --yellow-dark-2: #ffd500;
+  --light-grey: #a9a9a9;
+}
+
 body {
   padding: 0;
   margin: 0;
-  background-color: #c0eeff;
+  background-color: var(--bg-dark);
   font-family: 'Mulish', sans-serif !important;
+  overflow: hidden;
 }
 
 .main-container {
   width: 1280px;
   height: 100vh;
-  margin: 0px auto 0 auto;
+  margin: 60px auto 0 auto;
   padding: 15px 15px 15px 15px;
   display: flex;
   flex-direction: column;
@@ -21,6 +33,10 @@ body {
   .main-container {
     width: 880px;
     height: auto;
+  }
+
+  body {
+    overflow: auto;
   }
 }
 
