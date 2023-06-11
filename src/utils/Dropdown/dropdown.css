@@ -1,0 +1,15 @@
+.form-group{
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.form-control{
+    height: 50px;
+    width: 100%;
+    border-radius: 5px;
+    border: 3px solid var(--blue-dark-1);
+    padding: 10px;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--blue-dark-3);
+}
