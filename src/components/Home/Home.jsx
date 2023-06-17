@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Dropdown from "../../utils/Dropdown";
-import MVA from "../../Data/mva";
+// import MVA from "../../Data/mva";
 
 import "./home.css";
 
@@ -16,13 +16,16 @@ const IndianLegalActs = [
   { value: "8", label: "The Motor Vehicles Act" },
 ];
 
-const MVASectionList = MVA.map((item) => {
-  return { value: item.section, label: item.title };
-});
-
 const Home = () => {
   const [selectedAct, setSelectedAct] = useState("");
+  const [ipcdata, setIpcdata] = useState([]);
+  const [crpcdata, setCrpcdata] = useState([]);
   const [selectedSection, setSelectedSection] = useState("");
+
+  useEffect(() => {
+    fetchCRPC();
+    fetchIPC();
+  }, []);
 
   const handleDropdown = (selectedAct) => {
     setSelectedAct(selectedAct);
@@ -30,6 +33,75 @@ const Home = () => {
 
   const handleSelectedSection = (selectedSection) => {
     setSelectedSection(selectedSection);
+  };
+
+  const fetchCRPC = async () => {
+    const response = await fetch(
+      "https://raw.githubusercontent.com/civictech-India/Indian-Law-Penal-Code-Json/main/crpc.json"
+    );
+    const data = await response.json();
+    setCrpcdata(data);
+  };
+
+  const CRPCSectionList = crpcdata.map((item) => {
+    return { value: item.section, label: item.section_title };
+  });
+
+  const fetchIPC = async () => {
+    const response = await fetch(
+      "https://raw.githubusercontent.com/civictech-India/Indian-Law-Penal-Code-Json/main/ipc.json"
+    );
+    const data = await response.json();
+    setIpcdata(data);
+  };
+
+  const IPCSectionList = ipcdata.map((item) => {
+    return { value: item.Section, label: item.section_title };
+  });
+
+  const dynamicContent = (selectedAct) => {
+    switch (selectedAct) {
+      case "1":
+        return (
+          <>
+            <Dropdown
+              value={selectedSection}
+              data={IPCSectionList}
+              placeholder='Select A Section'
+              onChange={handleSelectedSection}
+            />
+          </>
+        );
+      case "2":
+        return (
+          <>
+            <Dropdown
+              value={selectedSection}
+              data={CRPCSectionList}
+              placeholder='Select A Section'
+              onChange={handleSelectedSection}
+            />
+          </>
+        );
+      default:
+        return (
+          <>
+            <p
+              style={{
+                color: "#a9a9a9",
+                width: "100%",
+                height: "50%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+              }}
+            >
+              Content yet to be added, Appreciate your patience.
+            </p>
+          </>
+        );
+    }
   };
 
   return (
@@ -50,33 +122,22 @@ const Home = () => {
             placeholder='Select An Act'
             onChange={handleDropdown}
           />
-
-          {selectedAct != "" ? (
-            <>
-              <Dropdown
-                value={selectedSection}
-                data={MVASectionList}
-                placeholder='Select A Section'
-                onChange={handleSelectedSection}
-              />
-            </>
+          {selectedAct === "" ? (
+            <p
+              style={{
+                color: "#a9a9a9",
+                width: "100%",
+                height: "50%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+              }}
+            >
+              Select an Act to see more
+            </p>
           ) : (
-            <>
-              <p
-                style={{
-                  color: "#a9a9a9",
-                  width: "100%",
-                  height: "50%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  textAlign: "center",
-                }}
-              >
-                Content yet to be added, to see more select "The Motor Vehicles
-                Act" for now. Appreciate your patience.
-              </p>
-            </>
+            dynamicContent(selectedAct)
           )}
         </div>
       </div>
