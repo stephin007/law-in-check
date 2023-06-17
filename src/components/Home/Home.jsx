@@ -16,11 +16,9 @@ const IndianLegalActs = [
   { value: "8", label: "The Motor Vehicles Act" },
 ];
 
-const SectionList = MVA.map((item) => {
+const MVASectionList = MVA.map((item) => {
   return { value: item.section, label: item.title };
 });
-
-console.log(SectionList);
 
 const Home = () => {
   const [selectedAct, setSelectedAct] = useState("");
@@ -53,11 +51,11 @@ const Home = () => {
             onChange={handleDropdown}
           />
 
-          {selectedAct == "8" ? (
+          {selectedAct != "" ? (
             <>
               <Dropdown
                 value={selectedSection}
-                data={SectionList}
+                data={MVASectionList}
                 placeholder='Select A Section'
                 onChange={handleSelectedSection}
               />
@@ -75,8 +73,8 @@ const Home = () => {
                   textAlign: "center",
                 }}
               >
-                Content yet to be added, to see more content select The Motor
-                Vehicles Act for now. Appreciate your patience.
+                Content yet to be added, to see more select "The Motor Vehicles
+                Act" for now. Appreciate your patience.
               </p>
             </>
           )}

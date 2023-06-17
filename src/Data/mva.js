@@ -1,3 +1,5 @@
+// Data credits: https://github.com/civictech-India/Indian-Law-Penal-Code-Json/tree/main
+
 const mva = [
   {
     section: 1,
