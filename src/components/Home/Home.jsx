@@ -20,11 +20,15 @@ const Home = () => {
   const [selectedAct, setSelectedAct] = useState("");
   const [ipcdata, setIpcdata] = useState([]);
   const [crpcdata, setCrpcdata] = useState([]);
+  const [iecdata, setIecdata] = useState([]);
+  const [cpcdata, setCpcdata] = useState([]);
   const [selectedSection, setSelectedSection] = useState("");
 
   useEffect(() => {
     fetchCRPC();
     fetchIPC();
+    fetchIEC();
+    fetchCPC();
   }, []);
 
   const handleDropdown = (selectedAct) => {
@@ -59,6 +63,30 @@ const Home = () => {
     return { value: item.Section, label: item.section_title };
   });
 
+  const fetchCPC = async () => {
+    const response = await fetch(
+      "https://raw.githubusercontent.com/civictech-India/Indian-Law-Penal-Code-Json/main/cpc.json"
+    );
+    const data = await response.json();
+    setCpcdata(data);
+  };
+
+  const CPCSectionList = cpcdata.map((item) => {
+    return { value: item.section, label: item.title };
+  });
+
+  const fetchIEC = async () => {
+    const response = await fetch(
+      "https://raw.githubusercontent.com/civictech-India/Indian-Law-Penal-Code-Json/main/iea.json"
+    );
+    const data = await response.json();
+    setIecdata(data);
+  };
+
+  const IECSectionList = iecdata.map((item) => {
+    return { value: item.section, label: item.section_title };
+  });
+
   const dynamicContent = (selectedAct) => {
     switch (selectedAct) {
       case "1":
@@ -78,6 +106,28 @@ const Home = () => {
             <Dropdown
               value={selectedSection}
               data={CRPCSectionList}
+              placeholder='Select A Section'
+              onChange={handleSelectedSection}
+            />
+          </>
+        );
+      case "3":
+        return (
+          <>
+            <Dropdown
+              value={selectedSection}
+              data={CPCSectionList}
+              placeholder='Select A Section'
+              onChange={handleSelectedSection}
+            />
+          </>
+        );
+      case "4":
+        return (
+          <>
+            <Dropdown
+              value={selectedSection}
+              data={IECSectionList}
               placeholder='Select A Section'
               onChange={handleSelectedSection}
             />
