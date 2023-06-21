@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Select from "react-select";
 
 import Dropdown from "../../utils/Dropdown";
 // import MVA from "../../Data/mva";
@@ -10,10 +11,9 @@ const IndianLegalActs = [
   { value: "2", label: "Code of Criminal Procedure" },
   { value: "3", label: "Civil Procedure Code" },
   { value: "4", label: "Indian Evidence Act" },
-  { value: "5", label: "Hindu Marriage Act" },
-  { value: "6", label: "Indian Divorce Act" },
-  { value: "7", label: "Negotiable Instruments Act" },
-  { value: "8", label: "The Motor Vehicles Act" },
+  { value: "5", label: "Indian Divorce Act" },
+  { value: "6", label: "Negotiable Instruments Act" },
+  { value: "7", label: "The Motor Vehicles Act" },
 ];
 
 const Home = () => {
@@ -22,21 +22,22 @@ const Home = () => {
   const [crpcdata, setCrpcdata] = useState([]);
   const [iecdata, setIecdata] = useState([]);
   const [cpcdata, setCpcdata] = useState([]);
-  const [selectedSection, setSelectedSection] = useState("");
+  const [idadata, setIdadata] = useState([]);
+  const [niadata, setNiadata] = useState([]);
+  const [mvadata, setMvadata] = useState([]);
 
   useEffect(() => {
     fetchCRPC();
     fetchIPC();
     fetchIEC();
     fetchCPC();
+    fetchIDA();
+    fetchNIA();
+    fetchMVA();
   }, []);
 
   const handleDropdown = (selectedAct) => {
     setSelectedAct(selectedAct);
-  };
-
-  const handleSelectedSection = (selectedSection) => {
-    setSelectedSection(selectedSection);
   };
 
   const fetchCRPC = async () => {
@@ -87,52 +88,87 @@ const Home = () => {
     return { value: item.section, label: item.section_title };
   });
 
+  const fetchIDA = async () => {
+    const response = await fetch(
+      "https://raw.githubusercontent.com/civictech-India/Indian-Law-Penal-Code-Json/main/ida.json"
+    );
+    const data = await response.json();
+    setIdadata(data);
+  };
+
+  const IDASectionList = idadata.map((item) => {
+    return { value: item.section, label: item.title };
+  });
+
+  const fetchNIA = async () => {
+    const response = await fetch(
+      "https://raw.githubusercontent.com/civictech-India/Indian-Law-Penal-Code-Json/main/nia.json"
+    );
+    const data = await response.json();
+    setNiadata(data);
+  };
+
+  const NIASectionList = niadata.map((item) => {
+    return { value: item.section, label: item.section_title };
+  });
+
+  const fetchMVA = async () => {
+    const response = await fetch(
+      "https://raw.githubusercontent.com/civictech-India/Indian-Law-Penal-Code-Json/main/MVA.json"
+    );
+    const data = await response.json();
+    setMvadata(data);
+  };
+
+  const MVASectionList = mvadata.map((item) => {
+    return { value: item.section, label: item.title };
+  });
+
   const dynamicContent = (selectedAct) => {
     switch (selectedAct) {
       case "1":
         return (
           <>
-            <Dropdown
-              value={selectedSection}
-              data={IPCSectionList}
-              placeholder='Select A Section'
-              onChange={handleSelectedSection}
-            />
+            <Select options={IPCSectionList} isClearable />
           </>
         );
       case "2":
         return (
           <>
-            <Dropdown
-              value={selectedSection}
-              data={CRPCSectionList}
-              placeholder='Select A Section'
-              onChange={handleSelectedSection}
-            />
+            <Select options={CRPCSectionList} isClearable />
           </>
         );
       case "3":
         return (
           <>
-            <Dropdown
-              value={selectedSection}
-              data={CPCSectionList}
-              placeholder='Select A Section'
-              onChange={handleSelectedSection}
-            />
+            <Select options={CPCSectionList} isClearable />
           </>
         );
       case "4":
         return (
           <>
-            <Dropdown
-              value={selectedSection}
-              data={IECSectionList}
-              placeholder='Select A Section'
-              onChange={handleSelectedSection}
-            />
+            <Select options={IECSectionList} isClearable />
           </>
         );
+      case "5":
+        return (
+          <>
+            <Select options={IDASectionList} isClearable />
+          </>
+        );
+      case "6":
+        return (
+          <>
+            <Select options={NIASectionList} isClearable />
+          </>
+        );
+      case "7":
+        return (
+          <>
+            <Select options={MVASectionList} isClearable />
+          </>
+        );
+
       default:
         return (
           <>
