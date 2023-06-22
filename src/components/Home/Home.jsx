@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Select from "react-select";
 
 import Dropdown from "../../utils/Dropdown";
-// import MVA from "../../Data/mva";
 
 import "./home.css";
 
@@ -25,6 +24,9 @@ const Home = () => {
   const [idadata, setIdadata] = useState([]);
   const [niadata, setNiadata] = useState([]);
   const [mvadata, setMvadata] = useState([]);
+  const [sectionDescription, setSectionDescription] = useState("");
+  const [ipcSectionDescription, setIpcSectionDescription] = useState("");
+  const [selectedSection, setSelectedSection] = useState(false);
 
   useEffect(() => {
     fetchCRPC();
@@ -38,6 +40,7 @@ const Home = () => {
 
   const handleDropdown = (selectedAct) => {
     setSelectedAct(selectedAct);
+    setSelectedSection(false);
   };
 
   const fetchCRPC = async () => {
@@ -124,48 +127,122 @@ const Home = () => {
     return { value: item.section, label: item.title };
   });
 
+  const functionToCaptureIPCSectionDescription = async (section) => {
+    const response = await fetch(
+      "https://raw.githubusercontent.com/civictech-India/Indian-Law-Penal-Code-Json/main/ipc.json"
+    );
+    const data = await response.json();
+    const sectionDescription = data.filter(
+      (item) => item.Section === section.value
+    );
+    console.log(sectionDescription);
+    setIpcSectionDescription(sectionDescription[0].section_desc);
+    setSelectedSection(true);
+  };
+
+  const generalFunctionToFetchSectionDescription = async (section, act) => {
+    const response = await fetch(
+      `https://raw.githubusercontent.com/civictech-India/Indian-Law-Penal-Code-Json/main/${act}.json`
+    );
+    const data = await response.json();
+    console.log(section);
+    const sectionDescription = data.filter((item) => item.section === section);
+    console.log(sectionDescription);
+    setSectionDescription(sectionDescription[0].description);
+    setSelectedSection(true);
+  };
+
+  const generalFunctionToFetchSpecificSectionDescription = async (
+    section,
+    act
+  ) => {
+    const response = await fetch(
+      `https://raw.githubusercontent.com/civictech-India/Indian-Law-Penal-Code-Json/main/${act}.json`
+    );
+    const data = await response.json();
+    const sectionDescription = data.filter(
+      (item) => item.section === section.value
+    );
+    setSectionDescription(sectionDescription[0].section_desc);
+    setSelectedSection(true);
+  };
+
   const dynamicContent = (selectedAct) => {
     switch (selectedAct) {
       case "1":
         return (
           <>
-            <Select options={IPCSectionList} isClearable />
+            <Select
+              options={IPCSectionList}
+              onChange={(e) => functionToCaptureIPCSectionDescription(e)}
+            />
           </>
         );
       case "2":
         return (
           <>
-            <Select options={CRPCSectionList} isClearable />
+            <Select
+              options={CRPCSectionList}
+              onChange={(e) =>
+                generalFunctionToFetchSpecificSectionDescription(e, "crpc")
+              }
+            />
           </>
         );
       case "3":
         return (
           <>
-            <Select options={CPCSectionList} isClearable />
+            <Select
+              options={CPCSectionList}
+              onChange={(e) =>
+                generalFunctionToFetchSectionDescription(e.value, "cpc")
+              }
+            />
           </>
         );
       case "4":
         return (
           <>
-            <Select options={IECSectionList} isClearable />
+            <Select
+              options={IECSectionList}
+              onChange={(e) =>
+                generalFunctionToFetchSpecificSectionDescription(e, "iea")
+              }
+            />
           </>
         );
       case "5":
         return (
           <>
-            <Select options={IDASectionList} isClearable />
+            <Select
+              options={IDASectionList}
+              isClearable
+              onChange={(e) =>
+                generalFunctionToFetchSectionDescription(e.value, "ida")
+              }
+            />
           </>
         );
       case "6":
         return (
           <>
-            <Select options={NIASectionList} isClearable />
+            <Select
+              options={NIASectionList}
+              onChange={(e) =>
+                generalFunctionToFetchSpecificSectionDescription(e, "nia")
+              }
+            />
           </>
         );
       case "7":
         return (
           <>
-            <Select options={MVASectionList} isClearable />
+            <Select
+              options={MVASectionList}
+              onChange={(e) =>
+                generalFunctionToFetchSectionDescription(e.value, "MVA")
+              }
+            />
           </>
         );
 
@@ -224,6 +301,55 @@ const Home = () => {
             </p>
           ) : (
             dynamicContent(selectedAct)
+          )}
+
+          {selectedAct === "1" && selectedSection && (
+            <div className='section-description'>
+              <h3>Section Description</h3>
+              <p>{ipcSectionDescription}</p>
+            </div>
+          )}
+
+          {selectedAct === "2" && selectedSection && (
+            <div className='section-description'>
+              <h3>Section Description</h3>
+              <p>{sectionDescription}</p>
+            </div>
+          )}
+
+          {selectedAct === "3" && selectedSection && (
+            <div className='section-description'>
+              <h3>Section Description</h3>
+              <p>{sectionDescription}</p>
+            </div>
+          )}
+
+          {selectedAct === "4" && selectedSection && (
+            <div className='section-description'>
+              <h3>Section Description</h3>
+              <p>{sectionDescription}</p>
+            </div>
+          )}
+
+          {selectedAct === "5" && selectedSection && (
+            <div className='section-description'>
+              <h3>Section Description</h3>
+              <p>{sectionDescription}</p>
+            </div>
+          )}
+
+          {selectedAct === "6" && selectedSection && (
+            <div className='section-description'>
+              <h3>Section Description</h3>
+              <p>{sectionDescription}</p>
+            </div>
+          )}
+
+          {selectedAct === "7" && selectedSection && (
+            <div className='section-description'>
+              <h3>Section Description</h3>
+              <p>{sectionDescription}</p>
+            </div>
           )}
         </div>
       </div>

@@ -16,7 +16,6 @@ body {
   margin: 0;
   background-color: var(--bg-dark);
   font-family: 'Mulish', sans-serif !important;
-  overflow: hidden;
 }
 
 .main-container {
