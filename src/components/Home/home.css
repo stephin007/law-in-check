@@ -41,6 +41,8 @@
 
     .home-section-1{
         width: 100%;
+        height: auto;
+        text-align: center;
     }
     
     .home-section-2{

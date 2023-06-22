@@ -274,7 +274,7 @@ const Home = () => {
           <h1>Empower Yourself: Know Your Rights</h1>
         </div>
         <div className='home-section-1-tagline'>
-          <p>The Ultimate App for Legal Knowledge and Empowerment!</p>
+          <p>The Ultimate App for Legal Knowledge</p>
         </div>
       </div>
       <div className='home-section-2'>
